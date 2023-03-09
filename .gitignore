@@ -32,3 +32,4 @@ doc/_build/
 .pytest_cache*
 ratpac.*sh
 RatpacConfig.cmake
+sims/
