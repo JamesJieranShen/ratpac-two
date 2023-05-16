@@ -1,0 +1,22 @@
+/glg4debug/glg4param omit_muon_processes 1.0
+/glg4debug/glg4param omit_hadronic_processes 1.0
+
+/rat/db/set DETECTOR experiment "dichroic_validation"
+/rat/db/set DETECTOR geo_file "dichroic_validation/shortpass.geo"
+
+/run/initialize
+
+/rat/proc count
+/rat/procset update 1
+
+/rat/proc classifychargebalance
+
+/rat/proclast outroot
+
+
+/generator/add combo gun2:point
+/generator/vtx/set opticalphoton 1 0 0 0 1.54875e-06 6.195e-06 0 0 0 10000
+/generator/pos/set -100 0 0
+/generator/rate/set 100
+
+/run/beamOn 1000
