@@ -19,6 +19,7 @@ src/core/Config.hh
 
 *.log
 *.root
+*.pkl
 *.heprep
 .DS_Store
 *.gif
