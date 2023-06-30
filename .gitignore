@@ -34,3 +34,4 @@ doc/_build/
 ratpac.*sh
 RatpacConfig.cmake
 sims/
+.ipynb_checkpoints
