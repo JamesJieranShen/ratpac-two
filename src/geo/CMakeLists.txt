@@ -19,6 +19,7 @@ add_library(geo OBJECT
         src/GeoCherenkovSourceFactory.cc
         src/GeoConvexLensFactory.cc
         src/GeoCutTubeFactory.cc
+        src/DichroiconArrayFactory.cc
         src/GeoEosFactory.cc
         src/GeoFactory.cc
         src/GeoLensFactory.cc

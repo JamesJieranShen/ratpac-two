@@ -9,6 +9,7 @@
 #include <RAT/GeoCherenkovSourceFactory.hh>
 #include <RAT/GeoConvexLensFactory.hh>
 #include <RAT/GeoCutTubeFactory.hh>
+#include <RAT/DichroiconArrayFactory.hh>
 #include <RAT/GeoLensFactory.hh>
 #include <RAT/GeoPerfBoxFactory.hh>
 #include <RAT/GeoPerfSphereFactory.hh>
@@ -38,6 +39,7 @@ namespace RAT {
 GeoBuilder::GeoBuilder() {
   // Register all the standard volumes
   new GeoBoxFactory();
+  new DichroiconArrayFactory();
   new GeoTubeFactory();
   new GeoTorusFactory();
   new GeoSphereFactory();
