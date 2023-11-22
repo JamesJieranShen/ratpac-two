@@ -467,4 +467,17 @@ std::vector<DBTable *> DB::ReadRATDBFile(const std::string &filename) {
   return contents;
 }
 
+void DB::DumpContentsToJson(std::ostream &stream) {
+  json::Writer writer(stream);
+  stream << "[\n";
+  const DBTableSet &tables = GetAllTables();
+  bool first = true;
+  for (auto table : tables) {
+    if (!first) stream << ",\n";
+    first = false;
+    writer.putValue(table.second->GetCompleteJSON(), "");
+  }
+  stream << "\n]\n";
+}
+
 }  // namespace RAT
