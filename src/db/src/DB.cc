@@ -475,6 +475,11 @@ void DB::DumpContentsToJson(std::ostream &stream) {
   for (auto table : tables) {
     if (!first) stream << ",\n";
     first = false;
+    // include key information in table if it is not already in there
+    table.second->Set("name", table.second->GetName());
+    table.second->Set("index", table.second->GetIndex());
+    table.second->Set("valid_begin", table.second->GetRunBegin());
+    table.second->Set("valid_end", table.second->GetRunEnd());
     writer.putValue(table.second->GetCompleteJSON(), "");
   }
   stream << "\n]\n";
