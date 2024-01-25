@@ -808,6 +808,12 @@ void GDMLWriteSolids::GLG4TorusStackWrite(xercesc::DOMElement* solElement, const
     }
   }
   solElement->appendChild(torusStackElement);
+  GLG4TorusStack* inner = torusStack->GetInner();
+  if (inner) {
+    xercesc::DOMElement* innerElement = NewElement("inner");
+    GLG4TorusStackWrite(innerElement, inner);
+    torusStackElement->appendChild(innerElement);
+  }
 }
 
 // --------------------------------------------------------------------
