@@ -13,7 +13,7 @@ class GeoBuilder {
   // Initialize factory with default classes
   GeoBuilder();
   // Construct all geometry from database, returns world volume
-  G4VPhysicalVolume *ConstructAll(std::string geo_tablename = "GEO");
+  G4VPhysicalVolume *ConstructAll(std::string geo_tablename = "GEO", bool checkOverlap = false);
 
   // Construct a volume from particular table (assumes mother volume already
   // exists), returns physical volume

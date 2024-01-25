@@ -83,7 +83,12 @@ G4VPhysicalVolume *DetectorConstruction::Construct() {
   PhotonThinning::Init();
 
   GeoBuilder geo;
-  fWorldPhys = geo.ConstructAll();
+  bool checkOverlap = false;
+  try {
+    checkOverlap = ldetector->GetZ("check_overlap");
+  } catch (DBNotFoundError &e) {
+  }
+  fWorldPhys = geo.ConstructAll("GEO", checkOverlap);
 
   // Dump gdml Geo
   try {

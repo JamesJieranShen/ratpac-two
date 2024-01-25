@@ -72,7 +72,7 @@ GeoBuilder::GeoBuilder() {
   GlobalFactory<WaveguideFactory>::Register("cone", new Alloc<WaveguideFactory, ConeWaveguideFactory>);
 }
 
-G4VPhysicalVolume *GeoBuilder::ConstructAll(std::string geo_tablename) {
+G4VPhysicalVolume *GeoBuilder::ConstructAll(std::string geo_tablename, bool checkOverlap) {
   // Get all geometry tables that have been loaded
   DBLinkGroup geo = DB::Get()->GetLinkGroup(geo_tablename);
   G4VPhysicalVolume *world = 0;
@@ -154,8 +154,10 @@ G4VPhysicalVolume *GeoBuilder::ConstructAll(std::string geo_tablename) {
           try {
             if (mother == "")
               world = GeoFactory::ConstructWithFactory(type, table);  // save world volume
-            else
-              GeoFactory::ConstructWithFactory(type, table);
+            else {
+              G4VPhysicalVolume *current_volume = GeoFactory::ConstructWithFactory(type, table);
+              if (current_volume != nullptr && checkOverlap) current_volume->CheckOverlaps(10000, 0.0, true, 10);
+            }
           } catch (GeoFactoryNotFoundError &e) {
             Log::Die("GeoBuilder error: Cannot find factory for volume type " + type);
           }
