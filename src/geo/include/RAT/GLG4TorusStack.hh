@@ -93,7 +93,7 @@ class GLG4TorusStack : public G4CSGSolid {
   G4double DistanceToOut(const G4ThreeVector &p, const G4ThreeVector &v, const G4bool calcNorm = G4bool(false),
                          G4bool *validNorm = 0, G4ThreeVector *n = 0) const;
   G4double DistanceToOut(const G4ThreeVector &p) const;
-  G4ThreeVector GetPointOnSurface() const;
+  // G4ThreeVector GetPointOnSurface() const;
   void BoundingLimits(G4ThreeVector &pMin, G4ThreeVector &pMax) const;
 
   // Naming method (pseudo-RTTI : run-time type identification)

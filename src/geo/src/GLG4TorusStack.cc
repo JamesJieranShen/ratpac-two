@@ -1235,22 +1235,22 @@ G4VisExtent GLG4TorusStack::GetExtent() const {
   return G4VisExtent(-max_rho, max_rho, -max_rho, max_rho, z_edge[0], z_edge[n]);
 }
 
-G4ThreeVector GLG4TorusStack::GetPointOnSurface() const {
-  if (inner) {
-    if (G4UniformRand() < 0.5) {
-      G4ThreeVector p = inner->GetPointOnSurface();
-      return p;
-    }
-  }
-  G4double z = z_edge[0] + G4UniformRand() * (z_edge[n] - z_edge[0]);
-  int i_segment = FindInOrderedList(z, z_edge, n + 1);
-  G4double r =
-      radius[i_segment] == 0 ? rho_edge[i_segment] : sqrt(square(radius[i_segment]) - square(z - z_o[i_segment]));
-  G4double phi = G4UniformRand() * CLHEP::twopi;
-  G4double x = r * cos(phi);
-  G4double y = r * sin(phi);
-  return G4ThreeVector(x, y, z);
-}
+// G4ThreeVector GLG4TorusStack::GetPointOnSurface() const {
+//   if (inner) {
+//     if (G4UniformRand() < 0.5) {
+//       G4ThreeVector p = inner->GetPointOnSurface();
+//       return p;
+//     }
+//   }
+//   G4double z = z_edge[0] + G4UniformRand() * (z_edge[n] - z_edge[0]);
+//   int i_segment = FindInOrderedList(z, z_edge, n + 1);
+//   G4double r =
+//       radius[i_segment] == 0 ? rho_edge[i_segment] : sqrt(square(radius[i_segment]) - square(z - z_o[i_segment]));
+//   G4double phi = G4UniformRand() * CLHEP::twopi;
+//   G4double x = r * cos(phi);
+//   G4double y = r * sin(phi);
+//   return G4ThreeVector(x, y, z);
+// }
 
 void GLG4TorusStack::BoundingLimits(G4ThreeVector &pMin, G4ThreeVector &pMax) const {
   pMin = G4ThreeVector(-max_rho, -max_rho, z_edge[0]);
