@@ -172,7 +172,8 @@ void Gsim::BeginOfRunAction(const G4Run * /*aRun*/) {
   abort_photons = lmc->GetZ("abort_photons");
   if (abort_photons) {
     warn << "Gsim: Aborting photons at user request" << newline;
-    chroma = new Chroma("photons.root");
+    std::string photon_dump_fname = lmc->GetS("photon_dump_file");
+    chroma = new Chroma(photon_dump_fname);
   }
 
   info << "Gsim: Simulating run " << runID << newline;
