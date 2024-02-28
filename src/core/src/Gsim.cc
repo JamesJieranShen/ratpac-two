@@ -238,7 +238,9 @@ void Gsim::EndOfRunAction(const G4Run * /*arun*/) {
     info << "Gsim: Tracking aborted for " << nabort << " events exceeding " << maxpe << " photoelectrons" << newline;
   }
   mainBlock->EndOfRun(run);
-  chroma->writeTree();
+  if (abort_photons) {
+    chroma->writeTree();
+  }
 }
 
 void Gsim::BeginOfEventAction(const G4Event *anEvent) {
@@ -268,7 +270,9 @@ void Gsim::EndOfEventAction(const G4Event *anEvent) {
 
   // Let main processor block process the event
   mainBlock->DSEvent(ds);
-  chroma->fillEvent();
+  if (abort_photons) {
+    chroma->fillEvent();
+  }
 
   delete ds;
 
