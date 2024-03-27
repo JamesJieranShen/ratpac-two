@@ -112,6 +112,28 @@ G4VPhysicalVolume *DetectorConstruction::Construct() {
     info << "dump_geometry is not defined, gdml is not exported." << newline;
   }
 
+  // Dump gdml Geo
+  try {
+    bool dump_geo = ldetector->GetZ("dump_geometry");
+    if (dump_geo) {
+      try {
+        std::string gdml_dump_file_name = ldetector->GetS("gdml_dump");
+        info << "Writing gdml geometry file to " << gdml_dump_file_name << newline;
+        GDMLParser parser;
+        parser.SetOutputFileOverwrite(true);
+        parser.Write(gdml_dump_file_name, fWorldPhys);
+
+        std::string ratdb_dump_file_name = ldetector->GetS("ratdb_dump");
+        std::ofstream ratdb_dump_file(ratdb_dump_file_name);
+        db->DumpContentsToJson(ratdb_dump_file);
+      } catch (DBNotFoundError) {
+        Log::Die("Geometry dump is requested, but variable gdml_dump or ratdb_dump is not set!");
+      }
+    }
+  } catch (DBNotFoundError &e) {
+    info << "dump_geometry is not defined, gdml is not exported." << newline;
+  }
+
   return fWorldPhys;
 }
 
