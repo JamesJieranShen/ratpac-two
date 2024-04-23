@@ -54,7 +54,7 @@ void PhotonData::clear() {
 }
 
 zmq::send_result_t PhotonData::send(zmq::socket_t& client) {
-  info << "CHROMA-ZMQ: Sending photon data to Chroma..." << newline;
+  debug << "CHROMA-ZMQ: Sending photon data to Chroma..." << newline;
   std::vector<zmq::mutable_buffer> msg;
   std::string header = PHOTONDATA;
   msg.push_back(zmq::buffer(header));
@@ -91,7 +91,7 @@ void PEData::clear() {
 bool PEData::readmsg(std::vector<zmq::message_t>& recv_msgs) {
   std::string header = recv_msgs[0].to_string();
   if (header == SIM_COMPLETE && recv_msgs.size() > 4 && *(recv_msgs[1].data<uint32_t>()) == event) {
-    info << "CHROMA-ZMQ: Received PE data!" << newline;
+    debug << "CHROMA-ZMQ: Received PE data!" << newline;
     copy_to_vector<uint32_t>(recv_msgs[2], channel_ids);
     copy_to_vector<float>(recv_msgs[3], times);
     copy_to_vector<float>(recv_msgs[4], wavelengths);
