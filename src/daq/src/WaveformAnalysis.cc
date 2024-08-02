@@ -9,7 +9,11 @@ namespace RAT {
 
 WaveformAnalysis::WaveformAnalysis() : WaveformAnalysis::WaveformAnalysis("") {}
 
-WaveformAnalysis::WaveformAnalysis(std::string analyzer_name) {
+WaveformAnalysis::WaveformAnalysis(std::string analyzer_name) : Processor("WaveformAnalysis") {
+  Configure(analyzer_name);
+}
+
+void WaveformAnalysis::Configure(const std::string& analyzer_name) {
   try {
     fDigit = DB::Get()->GetLink("DIGITIZER_ANALYSIS", analyzer_name);
     fPedWindowLow = fDigit->GetI("pedestal_window_low");
@@ -30,6 +34,54 @@ WaveformAnalysis::WaveformAnalysis(std::string analyzer_name) {
     }
   } catch (DBNotFoundError) {
     RAT::Log::Die("WaveformAnalysis: Unable to find analysis parameters.");
+  }
+}
+
+void WaveformAnalysis::SetS(std::string param, std::string value) {
+  if (param == "analyzer_name") {
+    Configure(value);
+  } else {
+    throw Processor::ParamUnknown(param);
+  }
+}
+
+void WaveformAnalysis::SetI(std::string param, int value) {
+  if (param == "run_fitting") {
+    fRunFit = value;
+  } else if (param == "pedestal_window_low") {
+    fPedWindowLow = value;
+  } else if (param == "pedestal_window_high") {
+    fPedWindowHigh = value;
+  } else {
+    throw Processor::ParamUnknown(param);
+  }
+}
+
+void WaveformAnalysis::SetD(std::string param, double value) {
+  if (param == "lookback") {
+    fLookback = value;
+  } else if (param == "integration_window_low") {
+    fIntWindowLow = value;
+  } else if (param == "integration_window_high") {
+    fIntWindowHigh = value;
+  } else if (param == "constant_fraction") {
+    fConstFrac = value;
+  } else if (param == "voltage_threshold") {
+    fThreshold = value;
+  } else if (param == "sliding_window_width") {
+    fSlidingWindow = value;
+  } else if (param == "sliding_window_thresh") {
+    fChargeThresh = value;
+  } else if (param == "fit_window_low") {
+    fFitWindowLow = value;
+  } else if (param == "fit_window_high") {
+    fFitWindowHigh = value;
+  } else if (param == "lognormal_shape") {
+    fFitShape = value;
+  } else if (param == "lognormal_scale") {
+    fFitScale = value;
+  } else {
+    throw Processor::ParamUnknown(param);
   }
 }
 
@@ -361,5 +413,7 @@ void WaveformAnalysis::FitWaveform() {
   delete wfm;
   delete ln_fit;
 }
+
+Processor::Result WaveformAnalysis::Event(DS::Root* ds, DS::EV* ev) { Digitizer digitizer = ev->GetDigitizer(); }
 
 }  // namespace RAT
