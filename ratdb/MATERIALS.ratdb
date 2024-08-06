@@ -500,7 +500,7 @@ elements: ["Potassium"],
 elemprop: [1.0],
 }
 
-//E.Keener at Penn, adding material and efficiency distribution for R7081
+//E.Keener at Penn, copied from above
 {
 name: "MATERIAL",
 index: "photocathode_R7081",
