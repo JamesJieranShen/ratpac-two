@@ -500,7 +500,7 @@ elements: ["Potassium"],
 elemprop: [1.0],
 }
 
-//E.Keener at Penn, copied from above
+// E.Keener at Penn, copied from photocathode_R7081HQE
 {
 name: "MATERIAL",
 index: "photocathode_R7081",

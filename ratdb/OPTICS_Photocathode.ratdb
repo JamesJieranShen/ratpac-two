@@ -294,14 +294,14 @@ PROPERTY_LIST: ["EFFICIENCY", "RINDEX", "KINDEX", "THICKNESS", ]
 }
 
 {
-//E.Keener at Penn, copied from above, data from R7081-20 datasheet
+// E.Keener at Penn, copied from photocathode_R7081HQE, quantum efficiency data from R7081-20 datasheet
 name: "OPTICS",
 index: "photocathode_R7081",
 valid_begin : [0, 0],
 valid_end : [0, 0],
 photocathode: 1,
 
-// From the R7081-20 datasheet
+
 EFFICIENCY_option: "wavelength",
 EFFICIENCY_value1: [277.03253918, 279.28433418, 280.42931468, 281.57429519, 283.82768043,
                     283.85630495, 286.1160512 , 286.14467571, 288.40124146, 291.76780219,
