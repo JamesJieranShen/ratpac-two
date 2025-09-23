@@ -23,6 +23,7 @@ class FitMimirProc : public Processor {
   std::unique_ptr<Mimir::FitStrategy> strategy;
   bool configured = false;
   std::string strategyName, strategyConfig;
+  std::string alias;  // name for fit result label
 };
 
 }  // namespace RAT

@@ -4,7 +4,7 @@
 #include <mimir/FitStrategy.hh>
 namespace RAT {
 
-FitMimirProc::FitMimirProc() : Processor("mimir"), inputHandler() {}
+FitMimirProc::FitMimirProc() : Processor("mimir"), inputHandler(), alias(name) {}
 
 void FitMimirProc::BeginOfRun(DS::Run *run) {
   if (!configured) {
@@ -31,13 +31,15 @@ void FitMimirProc::SetS(std::string param, std::string value) {
   if (param == "strategy") {
     DB::ParseTableName(value, strategyName, strategyConfig);
     configured = true;
+  } else if (param == "alias") {
+    alias = value;
   }
 }
 
 Processor::Result FitMimirProc::Event(DS::Root *ds, DS::EV *ev) {
   inputHandler.RegisterEvent(ev);
   Mimir::ParamSet result = strategy->Execute();
-  RAT::DS::FitResult *ratds_result = new RAT::DS::FitResult(name);
+  RAT::DS::FitResult *ratds_result = new RAT::DS::FitResult(alias);
   if (result.position_time.are_all_used()) {
     ratds_result->SetPosition(TVector3(result.position_time.components[0].value,
                                        result.position_time.components[1].value,
