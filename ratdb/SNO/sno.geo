@@ -70,7 +70,7 @@
 "efficiency_correction": 1.027,  
 "add_concentrator": 1, // Flag: 0 = no concentrators, 1 = concentrators
 "pos_table": "PMTINFO",
-"orientation": "point", // Aim all PMTs at a point
+"orientation": "manual", // Aim all PMTs at a point
 	     	      // "manual" means there is a dir_x, dir_y, dir_z
 	              // in pos_table for manual orientation of PMTs
 "orient_point": [0.0, 0.0, 0.0],
