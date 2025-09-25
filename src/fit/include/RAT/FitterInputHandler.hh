@@ -358,7 +358,7 @@ class FitterInputHandler {
 
     switch (mode) {
       case Mode::kPMT:
-        return 1;  // no nhit information
+        return ev->GetOrCreatePMT(id)->GetNPE();  // cheating
       case Mode::kDigitPMT:
         return ev->GetOrCreateDigitPMT(id)->GetNCrossings();  // approximate
       case Mode::kWaveformAnalysis: {

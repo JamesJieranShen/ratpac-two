@@ -59,6 +59,7 @@ Processor::Result ForcedTriggerProc::DSEvent(DS::Root *ds) {
     DS::PMT *pmt = ev->GetOrCreatePMT(pmtID);
     pmt->SetTime(time);
     pmt->SetCharge(integratedCharge);
+    pmt->SetNPE(mcpmt->GetMCPhotonCount());
     totalEVCharge += integratedCharge;
     if (fDigitize) {
       fDigitizer->DigitizePMT(mcpmt, pmtID, 0.0, pmtinfo);

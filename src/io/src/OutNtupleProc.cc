@@ -171,6 +171,7 @@ bool OutNtupleProc::OpenFile(std::string filename) {
     // Information about *first* detected PE
     outputTree->Branch("hitPMTTime", &hitPMTTime);
     outputTree->Branch("hitPMTCharge", &hitPMTCharge);
+    outputTree->Branch("hitPMTNPE", &hitPMTNPE);
   }
   if (options.digitizerhits) {
     // Output of the waveform analysis
@@ -555,12 +556,14 @@ Processor::Result OutNtupleProc::DSEvent(DS::Root *ds) {
       hitPMTID.clear();
       hitPMTTime.clear();
       hitPMTCharge.clear();
+      hitPMTNPE.clear();
 
       for (int pmtc : ev->GetAllPMTIDs()) {
         RAT::DS::PMT *pmt = ev->GetOrCreatePMT(pmtc);
         hitPMTID.push_back(pmt->GetID());
         hitPMTTime.push_back(pmt->GetTime());
         hitPMTCharge.push_back(pmt->GetCharge());
+        hitPMTNPE.push_back(pmt->GetNPE());
       }
     }
     if (ev->DigitizerExists()) {
@@ -683,6 +686,7 @@ Processor::Result OutNtupleProc::DSEvent(DS::Root *ds) {
       hitPMTID.clear();
       hitPMTTime.clear();
       hitPMTCharge.clear();
+      hitPMTNPE.clear();
     }
     if (options.digitizerhits) {
       digitNhits = 0;

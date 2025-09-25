@@ -30,12 +30,17 @@ class PMT : public TObject {
   virtual void SetTime(Double_t _time) { this->time = _time; }
   virtual Double_t GetTime() { return time; }
 
+  /** nPE estimation */
+  virtual void SetNPE(Int_t _npe) { this->npe = _npe; }
+  virtual Int_t GetNPE() { return npe; }
+
   ClassDef(PMT, 5);
 
  protected:
   Int_t id;
   Double_t charge;
   Double_t time;
+  Int_t npe;
 };
 
 }  // namespace DS

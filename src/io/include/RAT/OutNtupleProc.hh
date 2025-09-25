@@ -188,6 +188,7 @@ class OutNtupleProc : public Processor {
   std::vector<int> hitPMTID;
   std::vector<double> hitPMTTime;
   std::vector<double> hitPMTCharge;
+  std::vector<int> hitPMTNPE;
   // Store PMT information from digitized waveform
   int digitNhits;
   std::vector<double> digitPeak;

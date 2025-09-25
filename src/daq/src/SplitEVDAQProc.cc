@@ -162,6 +162,7 @@ Processor::Result SplitEVDAQProc::DSEvent(DS::Root *ds) {
         // PMT Hit time relative to the trigger
         pmt->SetTime(front_end_hit_time - tt);
         pmt->SetCharge(integratedCharge);
+        pmt->SetNPE(hitTimes.size());
         totalEVCharge += integratedCharge;
         if (fDigitize) {
           fDigitizer->DigitizePMT(mcpmt, pmtID, tt, pmtinfo);
