@@ -47,7 +47,7 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 ###########################################################
 # Set default build type
-set(default_build_type "Release")
+set(default_build_type "RelWithDebInfo")
 #set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_CXX_FLAGS -pg)
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
