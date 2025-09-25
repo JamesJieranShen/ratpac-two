@@ -32,6 +32,14 @@ if(NOT RATVERSION)
   set(RATVERSION ${PROJECT_VERSION})
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+add_custom_target(
+    copy-compile-commands ALL
+    ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_BINARY_DIR}/compile_commands.json
+        ${CMAKE_CURRENT_LIST_DIR}
+)
+
 ###########################################################
 # Require out-of-source builds
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
