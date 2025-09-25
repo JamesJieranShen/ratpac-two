@@ -1,0 +1,34 @@
+/glg4debug/glg4param omit_muon_processes 1.0
+/glg4debug/glg4param omit_hadronic_processes 1.0
+
+/rat/db/set DETECTOR experiment "SNO"
+/rat/db/set DETECTOR geo_file "SNO/sno.geo"
+/rat/db/set GEO[d2o] material "labppo_2p2_scintillator"
+
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] cost_config "SNO"
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] x_bound [-6200,6200]
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] y_bound [-6200,6200]
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] z_bound [-6200,6200]
+
+/run/initialize
+
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 5.0
+
+/rat/proc quadfitter
+/rat/procset max_radius 6200.0
+
+/rat/proc mimir
+/rat/procset strategy "FitStep[PositionTime_PMTTypeTimeResidual]"
+
+/rat/proc count
+/rat/procset update 1
+
+/rat/proclast outntuple
+
+/generator/add combo gun2:fillshell
+/generator/vtx/set e- 0 0 0 0 1.0 10.0
+/generator/pos/set 0 0 0 0 0 0 0 5500
+/generator/rate/set 2.0
+
+/run/beamOn 1000
