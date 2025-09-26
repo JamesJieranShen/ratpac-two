@@ -5,8 +5,6 @@
 #include <mimir/PMTTypeTimeResidualPDF.hh>
 #include <numeric>
 
-#include "Math/Interpolator.h"
-
 namespace Mimir {
 bool PMTTypeTimeResidualPDF::Configure(RAT::DBLinkPtr db_link) {
   std::vector<double> binning = db_link->GetDArray("binning");
@@ -70,24 +68,14 @@ double PMTTypeTimeResidualPDF::operator()(const ParamSet& params) const {
       continue;
     }
     TVector3 pmt_position = pmt_info->GetPosition(pmtid);
-    const ROOT::Math::Interpolator& spline_to_use = tresid_nll_splines.at(pmt_type);
+    const RAT::BoundedInterpolator& spline_to_use = tresid_nll_splines.at(pmt_type);
     double weight = type_weights.at(pmt_type);
     double tof = (vertex_position - pmt_position).Mag() / light_speed_in_medium;
     double tresid = time - vertex_time - tof;
-    result += clamped_spline(spline_to_use, tresid) * weight;
+    result += spline_to_use.Eval(tresid) * weight;
   }
 
   return result;
-}
-
-double PMTTypeTimeResidualPDF::clamped_spline(const ROOT::Math::Interpolator& spline, double x) const {
-  if (x <= left_bound) {
-    return spline.Eval(left_bound + 1e-4);
-  } else if (x >= right_bound) {
-    return spline.Eval(right_bound - 1e-4);
-  } else {
-    return spline.Eval(x);
-  }
 }
 
 }  // namespace Mimir
