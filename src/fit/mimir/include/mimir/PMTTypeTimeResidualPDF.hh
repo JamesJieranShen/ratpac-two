@@ -11,7 +11,8 @@ class PMTTypeTimeResidualPDF : public Cost {
   double operator()(const ParamSet& params) const override;
 
  protected:
-  double light_speed_in_medium;
+  double light_speed_internal, light_speed_external;
+  double av_radius;
   double left_bound, right_bound;
   std::map<int, RAT::BoundedInterpolator> tresid_nll_splines;
   std::map<int, double> type_weights;

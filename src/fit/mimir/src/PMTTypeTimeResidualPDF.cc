@@ -1,6 +1,7 @@
 #include <TVector3.h>
 
 #include <RAT/DS/RunStore.hh>
+#include <RAT/LightPathCalculator.hh>
 #include <RAT/Log.hh>
 #include <mimir/PMTTypeTimeResidualPDF.hh>
 #include <numeric>
@@ -33,7 +34,9 @@ bool PMTTypeTimeResidualPDF::Configure(RAT::DBLinkPtr db_link) {
     }
     tresid_nll_splines.try_emplace(pmt_type, binning, nll_vals, ROOT::Math::Interpolation::kCSPLINE);
   }
-  light_speed_in_medium = db_link->GetD("light_speed_in_medium");
+  light_speed_internal = db_link->GetD("light_speed_in_medium");
+  light_speed_external = db_link->GetD("light_speed_in_external_medium");
+  av_radius = db_link->GetD("av_radius");
   return true;
 }
 
@@ -70,7 +73,9 @@ double PMTTypeTimeResidualPDF::operator()(const ParamSet& params) const {
     TVector3 pmt_position = pmt_info->GetPosition(pmtid);
     const RAT::BoundedInterpolator& spline_to_use = tresid_nll_splines.at(pmt_type);
     double weight = type_weights.at(pmt_type);
-    double tof = (vertex_position - pmt_position).Mag() / light_speed_in_medium;
+    double vtx_to_av = RAT::DistanceToSphere(vertex_position, pmt_position, av_radius);
+    double av_to_pmt = (pmt_position - vertex_position).Mag() - vtx_to_av;
+    double tof = vtx_to_av / light_speed_internal + av_to_pmt / light_speed_external;
     double tresid = time - vertex_time - tof;
     result += spline_to_use.Eval(tresid) * weight;
   }
