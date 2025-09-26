@@ -33,6 +33,13 @@ class BoundedInterpolator : ROOT::Math::Interpolator {
     return fInterpolator.Deriv2(x);
   }
 
+  double Integ(double xlow, double xhigh) const {
+    if (xlow <= bound_left) xlow = bound_left + 1e-8;
+    if (xhigh >= bound_right) xhigh = bound_right - 1e-8;
+    if (xlow >= xhigh) return 0;
+    return fInterpolator.Integ(xlow, xhigh);
+  }
+
   bool SetData(const std::vector<double> &x, const std::vector<double> &y) { return fInterpolator.SetData(x, y); }
 
  protected:
