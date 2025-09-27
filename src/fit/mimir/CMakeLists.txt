@@ -2,6 +2,7 @@
 add_library(mimir OBJECT
   src/FitMimirProc.cc
   src/PMTTypeTimeResidualPDF.cc
+  src/PMTTypeTimeResidualNPE_PDF.cc
   src/ParamSet.cc
   src/FitStep.cc
   src/RootOptimizer.cc
