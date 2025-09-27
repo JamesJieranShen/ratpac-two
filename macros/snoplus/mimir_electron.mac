@@ -10,6 +10,11 @@
 /rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] y_bound [-6200,6200]
 /rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidual] z_bound [-6200,6200]
 
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidualNPE] cost_config "SNO"
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidualNPE] x_bound [-6200,6200]
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidualNPE] y_bound [-6200,6200]
+/rat/db/set MIMIR_FitStep[PositionTime_PMTTypeTimeResidualNPE] z_bound [-6200,6200]
+
 /run/initialize
 
 /rat/proc splitevdaq
@@ -20,6 +25,10 @@
 
 /rat/proc mimir
 /rat/procset strategy "FitStep[PositionTime_PMTTypeTimeResidual]"
+
+/rat/proc mimir
+/rat/procset strategy "FitStep[PositionTime_PMTTypeTimeResidualNPE]"
+/rat/procset name "mimir_npe"
 
 /rat/proc count
 /rat/procset update 1
