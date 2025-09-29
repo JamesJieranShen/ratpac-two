@@ -131,6 +131,10 @@ include_directories(${XercesC_INCLUDE_DIRS})
 
 find_package(Threads REQUIRED)
 
+find_package(HDF5 COMPONENTS C CXX REQUIRED)
+include_directories(${HDF5_INCLUDE_DIRS})
+find_package(HighFive REQUIRED)
+
 
 ###########################################################
 # Configure header with our version information
