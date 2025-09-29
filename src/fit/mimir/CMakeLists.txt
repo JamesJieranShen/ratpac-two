@@ -3,9 +3,11 @@ add_library(mimir OBJECT
   src/FitMimirProc.cc
   src/PMTTypeTimeResidualPDF.cc
   src/PMTTypeTimeResidualNPE_PDF.cc
+  src/PMTTypeCosAlphaPDF.cc
   src/ParamSet.cc
   src/FitStep.cc
   src/RootOptimizer.cc
+  src/FitSteps.cc
 )
 
 set_target_properties(mimir PROPERTIES POSITION_INDEPENDENT_CODE ON)
