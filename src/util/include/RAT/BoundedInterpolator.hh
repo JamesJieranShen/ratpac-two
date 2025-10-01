@@ -8,13 +8,29 @@
 // Wrapper around ROOT::Math::Interpolator class, with extra control of out-of-bound evaluations.
 namespace RAT {
 
-class BoundedInterpolator : ROOT::Math::Interpolator {
+class BoundedInterpolator {
  public:
   BoundedInterpolator(const std::vector<double> &x, const std::vector<double> &y,
                       ROOT::Math::Interpolation::Type type = ROOT::Math::Interpolation::kCSPLINE)
       : fInterpolator(x, y, type) {
     bound_left = x.at(0);
     bound_right = x.at(x.size() - 1);
+  }
+
+  BoundedInterpolator(unsigned int ndata = 0,
+                      ROOT::Math::Interpolation::Type type = ROOT::Math::Interpolation::kCSPLINE)
+      : fInterpolator(ndata, type) {}
+
+  bool SetData(const std::vector<double> &x, const std::vector<double> &y) {
+    bound_left = x.at(0);
+    bound_right = x.at(x.size() - 1);
+    return fInterpolator.SetData(x, y);
+  }
+
+  bool SetData(unsigned int ndata, const double *x, const double *y) {
+    bound_left = x[0];
+    bound_right = x[ndata - 1];
+    return fInterpolator.SetData(ndata, x, y);
   }
 
   double Eval(double x) const {
@@ -39,8 +55,6 @@ class BoundedInterpolator : ROOT::Math::Interpolator {
     if (xlow >= xhigh) return 0;
     return fInterpolator.Integ(xlow, xhigh);
   }
-
-  bool SetData(const std::vector<double> &x, const std::vector<double> &y) { return fInterpolator.SetData(x, y); }
 
  protected:
   ROOT::Math::Interpolator fInterpolator;
